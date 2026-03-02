@@ -59,7 +59,7 @@ export const getUsers = async (req, res, next) => {
     }
 };
 
-import SecurityLog from '../models/securityLogModel.js';
+
 
 // @desc    Update user (block/unblock, edit details)
 // @route   PUT /api/admin/users/:id
@@ -76,12 +76,6 @@ export const updateUser = async (req, res, next) => {
             // Password Reset explicit tool
             if (req.body.password) {
                 user.password = req.body.password; // bcrypt hashing handled in Mongoose pre-save hook 
-                await SecurityLog.create({
-                    userId: req.user._id, // Action performed by Admin
-                    actionType: 'password_reset',
-                    ipAddress: req.ip || req.connection.remoteAddress,
-                    description: `Admin reset password for user: ${user.email}`
-                });
             }
 
             if (req.body.status !== undefined) {
@@ -89,14 +83,7 @@ export const updateUser = async (req, res, next) => {
                 user.status = req.body.status;
                 user.isBlocked = (req.body.status === 'blocked'); // Retain boolean compatibility flag
 
-                if (oldStatus !== req.body.status) {
-                    await SecurityLog.create({
-                        userId: req.user._id, // Action performed by Admin
-                        actionType: req.body.status === 'blocked' ? 'account_blocked' : 'account_unblocked',
-                        ipAddress: req.ip || req.connection.remoteAddress,
-                        description: `Admin ${req.body.status} user: ${user.email}`
-                    });
-                }
+
             }
 
             const updatedUser = await user.save();

@@ -10,8 +10,8 @@ const AdminSecurityLogs = () => {
     const fetchLogs = async () => {
         try {
             setLoading(true);
-            const { data } = await api.get('/admin/security/logs');
-            setLogs(data);
+            // API removed. Defaulting to empty logs.
+            setLogs([]);
         } catch (error) {
             toast.error('Failed to load security logs');
         } finally {

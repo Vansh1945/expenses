@@ -8,30 +8,40 @@ const Budget = () => {
     const [amount, setAmount] = useState('');
     const [savingGoal, setSavingGoal] = useState('');
     const [loading, setLoading] = useState(true);
+    const [monthlyReport, setMonthlyReport] = useState(null);
 
     const today = new Date();
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    const fetchBudget = async () => {
+    const fetchBudgetAndReport = async () => {
         try {
-            const res = await api.get(`/budget?month=${month}&year=${year}`);
-            setBudgetStatus(res.data);
-            // Pre-fill form with existing values
-            setAmount(res.data.budget || '');
-            setSavingGoal(res.data.savingGoal || '');
-        } catch (error) {
-            if (error.response?.status !== 404) {
-                toast.error('Failed to load budget');
+            const [budgetRes, reportRes] = await Promise.all([
+                api.get(`/budget?month=${month}&year=${year}`).catch(() => ({ data: null })),
+                api.get(`/reports/monthly?month=${month}&year=${year}`).catch(() => ({ data: null }))
+            ]);
+
+            if (budgetRes.data) {
+                setBudgetStatus(budgetRes.data);
+                setAmount(budgetRes.data.budget || '');
+                setSavingGoal(budgetRes.data.savingGoal || '');
+            } else {
+                setBudgetStatus(null);
             }
+
+            if (reportRes.data) {
+                setMonthlyReport(reportRes.data);
+            }
+        } catch (error) {
+            toast.error('Failed to load data');
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchBudget();
+        fetchBudgetAndReport();
     }, []);
 
     const handleSetBudget = async (e) => {
@@ -48,7 +58,7 @@ const Budget = () => {
                 savingGoal: savingGoal ? Number(savingGoal) : 0,
             });
             toast.success('Budget saved successfully!');
-            fetchBudget();
+            fetchBudgetAndReport();
         } catch (error) {
             toast.error(error.response?.data?.message || 'Failed to set budget');
         }
@@ -63,8 +73,13 @@ const Budget = () => {
             budgetStatus?.isNearLimit ? 'bg-yellow-500' :
                 'bg-indigo-500';
 
+    // Calculate actual savings based on Income - Expenses
+    const currentSavings = monthlyReport
+        ? monthlyReport.totalIncome - monthlyReport.totalSpent
+        : (budgetStatus ? budgetStatus.budget - budgetStatus.totalSpent : 0);
+
     const savingsProgress = budgetStatus?.savingGoal > 0
-        ? Math.min(100, ((budgetStatus.budget - budgetStatus.totalSpent) / budgetStatus.savingGoal) * 100)
+        ? Math.min(100, (currentSavings / budgetStatus.savingGoal) * 100)
         : 0;
 
     if (loading) return (
@@ -117,8 +132,8 @@ const Budget = () => {
                     {/* Warnings */}
                     {budgetStatus.warning && (
                         <div className={`border-l-4 p-4 rounded flex items-start gap-3 ${budgetStatus.isExceeded
-                                ? 'bg-red-50 border-red-500'
-                                : 'bg-yellow-50 border-yellow-400'
+                            ? 'bg-red-50 border-red-500'
+                            : 'bg-yellow-50 border-yellow-400'
                             }`}>
                             <MdWarning className={`w-6 h-6 mt-0.5 shrink-0 ${budgetStatus.isExceeded ? 'text-red-500' : 'text-yellow-500'}`} />
                             <div>
@@ -200,8 +215,8 @@ const Budget = () => {
                                 </div>
                                 <div className="bg-purple-50 rounded-lg p-3">
                                     <p className="text-xs text-gray-500 uppercase mb-1">Saved So Far</p>
-                                    <p className={`font-bold ${budgetStatus.remaining >= budgetStatus.savingGoal ? 'text-green-700' : 'text-purple-700'}`}>
-                                        ₹{Math.max(0, budgetStatus.remaining).toLocaleString()}
+                                    <p className={`font-bold ${currentSavings >= budgetStatus.savingGoal ? 'text-green-700' : 'text-purple-700'}`}>
+                                        ₹{currentSavings.toLocaleString()}
                                     </p>
                                 </div>
                                 <div className="bg-purple-50 rounded-lg p-3">

@@ -1,5 +1,4 @@
 import User from '../models/userModel.js';
-import SecurityLog from '../models/securityLogModel.js';
 import generateToken from '../utils/generateToken.js';
 
 // @desc    Register a new user
@@ -59,14 +58,7 @@ const authUser = async (req, res, next) => {
                 throw new Error('Account has been blocked by an administrator.');
             }
 
-            // Log Success
-            await SecurityLog.create({
-                userId: user._id,
-                email: user.email,
-                actionType: 'successful_login',
-                ipAddress,
-                description: 'User authenticated successfully.'
-            });
+
 
             // Maintain legacy tracking array on User model explicitly mapped in old routes
             user.loginActivity.unshift({
@@ -83,14 +75,7 @@ const authUser = async (req, res, next) => {
                 token: generateToken(user._id),
             });
         } else {
-            // Log Failure
-            await SecurityLog.create({
-                userId: user ? user._id : null,
-                email,
-                actionType: 'failed_login',
-                ipAddress,
-                description: 'Invalid credentials provided.'
-            });
+
 
             res.status(401);
             throw new Error('Invalid email or password');

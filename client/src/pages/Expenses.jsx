@@ -6,17 +6,12 @@ import { AuthContext } from '../context/AuthContext';
 
 const Expenses = () => {
     const { user } = useContext(AuthContext);
-    const isRoommate = user?.role === 'roommate';
 
     const [expenses, setExpenses] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [editingId, setEditingId] = useState(null);
-
-    // Roommate: available groups for selection
-    const [myGroups, setMyGroups] = useState([]);
-    const [selectedGroupId, setSelectedGroupId] = useState('');
 
     const today = new Date();
     const [filterMonth, setFilterMonth] = useState(today.getMonth() + 1);
@@ -51,15 +46,7 @@ const Expenses = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterMonth, filterYear]);
 
-    // Fetch roommate's groups on mount
-    useEffect(() => {
-        if (isRoommate) {
-            api.get('/groups').then(res => {
-                setMyGroups(res.data);
-                if (res.data.length > 0) setSelectedGroupId(res.data[0]._id);
-            }).catch(() => { });
-        }
-    }, [isRoommate]);
+
 
     const openAdd = () => {
         setEditingId(null);
@@ -87,17 +74,6 @@ const Expenses = () => {
                 // Edit always goes to personal expense endpoint
                 await api.put(`/expenses/${editingId}`, formData);
                 toast.success('Expense updated');
-            } else if (isRoommate && selectedGroupId) {
-                // Roommate: add as a GROUP expense with equal split
-                await api.post(`/groups/${selectedGroupId}/expenses`, {
-                    description: formData.note || formData.category,
-                    category: formData.category,
-                    amount: Number(formData.amount),
-                    paidBy: user._id,
-                    splitType: 'equal',
-                    date: formData.date || new Date().toISOString(),
-                });
-                toast.success('Expense added to your room! Split equally among all members.');
             } else {
                 await api.post('/expenses', formData);
                 toast.success('Expense added');
@@ -269,25 +245,7 @@ const Expenses = () => {
                     <div className="bg-white rounded-xl shadow-xl p-8 w-full max-w-md max-h-screen overflow-y-auto">
                         <h2 className="text-xl font-bold mb-6">{editingId ? 'Edit Expense' : 'Record New Expense'}</h2>
 
-                        {/* Roommate: show banner + group selector */}
-                        {isRoommate && !editingId && (
-                            <div className="mb-4 p-3 bg-teal-50 border border-teal-200 rounded-lg">
-                                <p className="text-sm font-semibold text-teal-700 mb-2">🏠 Adding to Room (equal split)</p>
-                                {myGroups.length > 0 ? (
-                                    <select
-                                        value={selectedGroupId}
-                                        onChange={e => setSelectedGroupId(e.target.value)}
-                                        className="block w-full px-3 py-2 border border-teal-300 rounded-md text-sm focus:ring-teal-500 focus:border-teal-500"
-                                    >
-                                        {myGroups.map(g => (
-                                            <option key={g._id} value={g._id}>{g.name} ({g.inviteCode})</option>
-                                        ))}
-                                    </select>
-                                ) : (
-                                    <p className="text-xs text-red-500">⚠ No rooms found. Create or join a room first from My Rooms page.</p>
-                                )}
-                            </div>
-                        )}
+
 
                         <form onSubmit={handleSave} className="space-y-4">
                             <div>

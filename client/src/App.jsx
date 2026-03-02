@@ -16,7 +16,6 @@ import Income from './pages/Income';
 import Expenses from './pages/Expenses';
 import Budget from './pages/Budget';
 import Reports from './pages/Reports';
-import Groups from './pages/Groups';
 import Analysis from './pages/Analysis';
 import Alerts from './pages/Alerts';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -26,9 +25,9 @@ import AdminReports from './pages/admin/AdminReports';
 import AdminProfile from './pages/admin/AdminProfile';
 import AdminSettings from './pages/admin/AdminSettings';
 import AdminSecurityLogs from './pages/admin/AdminSecurityLogs';
-import CompanyDashboard from './pages/CompanyDashboard';
-import CompanyProjects from './pages/CompanyProjects';
-import CompanyExpenses from './pages/CompanyExpenses';
+import CompanyDashboard from './pages/company/CompanyDashboard';
+import CompanyProjects from './pages/company/CompanyProjects';
+import CompanyExpenses from './pages/company/CompanyExpenses';
 
 function App() {
   return (
@@ -57,10 +56,6 @@ function App() {
               <Route path="/analysis" element={<Analysis />} />
               <Route path="/alerts" element={<Alerts />} />
 
-              {/* Role Specific Routes */}
-              <Route element={<ProtectedRoute allowedRoles={['roommate', 'family', 'trip', 'admin']} />}>
-                <Route path="/groups" element={<Groups />} />
-              </Route>
 
               <Route element={<ProtectedRoute allowedRoles={['company', 'admin']} />}>
                 <Route path="/company/dashboard" element={<CompanyDashboard />} />

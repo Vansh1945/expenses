@@ -16,13 +16,13 @@ const AdminSettings = () => {
     const fetchSettings = async () => {
         try {
             setLoading(true);
-            const { data } = await api.get('/admin/settings');
+            // API removed. Defaulting to local state.
             setSettings({
-                alertsEnabled: data.alertsEnabled,
-                aiPredictionsEnabled: data.aiPredictionsEnabled,
-                maxExpenseLimit: data.maxExpenseLimit || '',
-                systemNotifications: data.systemNotifications || '',
-                maintenanceMode: data.maintenanceMode
+                alertsEnabled: true,
+                aiPredictionsEnabled: true,
+                maxExpenseLimit: '',
+                systemNotifications: '',
+                maintenanceMode: false
             });
         } catch (error) {
             toast.error('Failed to load system settings');
@@ -37,15 +37,7 @@ const AdminSettings = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const payload = { ...settings };
-            if (!payload.maxExpenseLimit) payload.maxExpenseLimit = null;
-            await api.put('/admin/settings', payload);
-            toast.success('System settings updated successfully');
-            fetchSettings();
-        } catch (error) {
-            toast.error('Error updating settings');
-        }
+        toast.info('Settings API disabled');
     };
 
     const toggleSetting = (key) => setSettings(prev => ({ ...prev, [key]: !prev[key] }));

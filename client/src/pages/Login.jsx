@@ -11,9 +11,15 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const success = await login(email, password);
-        if (success) {
-            navigate('/dashboard');
+        const result = await login(email, password);
+        if (result.success) {
+            if (result.role === 'admin') {
+                navigate('/admin/dashboard');
+            } else if (result.role === 'company') {
+                navigate('/company/dashboard');
+            } else {
+                navigate('/dashboard');
+            }
         }
     };
 

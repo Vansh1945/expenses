@@ -31,32 +31,10 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
                 { name: 'Budget', path: '/budget', icon: <MdAttachMoney className="w-6 h-6" /> },
                 { name: 'Reports', path: '/reports', icon: <MdPieChart className="w-6 h-6" /> },
                 { name: 'Analysis', path: '/analysis', icon: <MdAnalytics className="w-6 h-6" /> },
-                { name: 'Notification', path: '/notification', icon: <MdAnalytics className="w-6 h-6" /> }
+                { name: 'Notification', path: '/alerts', icon: <MdNotificationsActive className="w-6 h-6" /> }
             ];
         }
 
-        // Roommate role: room management and shared expense pages
-        if (role === 'roommate') {
-            return [
-                { name: 'Dashboard', path: '/dashboard', icon: <MdDashboard className="w-6 h-6" /> },
-                { name: 'My Rooms', path: '/groups', icon: <MdHome className="w-6 h-6 text-blue-400" /> },
-                { name: 'Shared Expenses', path: '/expenses', icon: <MdCallSplit className="w-6 h-6 text-orange-400" /> },
-                { name: 'Settlements', path: '/groups', icon: <MdHandshake className="w-6 h-6 text-green-400" /> },
-                { name: 'Reports', path: '/reports', icon: <MdBarChart className="w-6 h-6 text-purple-400" /> },
-            ];
-        }
-
-        // Family role: family household management pages
-        if (role === 'family') {
-            return [
-                { name: 'Dashboard', path: '/dashboard', icon: <MdDashboard className="w-6 h-6" /> },
-                { name: 'Family Members', path: '/groups', icon: <MdGroup className="w-6 h-6 text-pink-400" /> },
-                { name: 'Income', path: '/income', icon: <FaMoneyBillWave className="w-6 h-6 text-green-400" /> },
-                { name: 'Expenses', path: '/expenses', icon: <MdCallSplit className="w-6 h-6 text-red-400" /> },
-                { name: 'Goals', path: '/groups', icon: <MdAttachMoney className="w-6 h-6 text-yellow-500" /> },
-                { name: 'Reports', path: '/reports', icon: <MdBarChart className="w-6 h-6 text-purple-400" /> },
-            ];
-        }
 
         let items = [
             { name: 'Dashboard', path: '/dashboard', icon: <MdDashboard className="w-6 h-6" /> },
@@ -68,9 +46,6 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
             { name: 'Alerts', path: '/alerts', icon: <MdNotificationsActive className="w-6 h-6" /> },
         ];
 
-        if (['roommate', 'family', 'trip'].includes(role)) {
-            items.splice(4, 0, { name: 'Groups', path: '/groups', icon: <MdGroup className="w-6 h-6" /> });
-        }
 
         if (role === 'company') {
             items = [

@@ -34,9 +34,6 @@ router.route('/users/:userId/expenses/:expenseId')
     .delete(deleteUserExpense);
 
 import {
-    getSettings,
-    updateSettings,
-    getSecurityLogs,
     getAdminAnalytics
 } from '../controllers/adminMasterController.js';
 
@@ -51,13 +48,6 @@ router.route('/categories/:id')
 // Reports
 router.get('/reports', getReports);
 
-// Master Control Settings
-router.route('/settings')
-    .get(getSettings)
-    .put(updateSettings);
-
-// Security Tracking
-router.get('/security/logs', getSecurityLogs);
 
 // Advanced Analytics
 router.get('/analytics/overview', getAdminAnalytics);

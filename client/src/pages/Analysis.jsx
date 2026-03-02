@@ -75,7 +75,7 @@ const Analysis = () => {
                 <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow p-6 text-white flex flex-col justify-center min-h-[220px]">
                     <div className="flex items-center mb-3">
                         <MdLightbulb className="w-8 h-8 mr-3 text-yellow-300" />
-                        <h2 className="text-xl font-bold">Smart AI Prediction</h2>
+                        <h2 className="text-xl font-bold">Smart Prediction</h2>
                     </div>
                     <p className="text-indigo-100 mb-4 text-sm">
                         Based on your 3-month rolling average, your predicted spend next month:

@@ -254,9 +254,6 @@ const AdminUsers = () => {
                                     <label className="block text-sm font-medium text-gray-700">Role</label>
                                     <select value={editFormData.role} onChange={(e) => setEditFormData({ ...editFormData, role: e.target.value })} className="mt-1 block w-full border rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500">
                                         <option value="personal">Personal</option>
-                                        <option value="roommate">Roommate</option>
-                                        <option value="family">Family</option>
-                                        <option value="trip">Trip</option>
                                         <option value="company">Company</option>
                                         <option value="admin">Admin</option>
                                     </select>

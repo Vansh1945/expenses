@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import api from '../services/api';
-import { AuthContext } from '../context/AuthContext';
+import api from '../../services/api';
+import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
 import { MdReceipt, MdCheckCircle, MdCancel, MdLink } from 'react-icons/md';
 

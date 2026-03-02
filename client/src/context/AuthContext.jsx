@@ -35,10 +35,10 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', res.data.token);
             setUser(res.data);
             toast.success('Logged in successfully!');
-            return true;
+            return { success: true, role: res.data.role };
         } catch (error) {
             toast.error(error.response?.data?.message || 'Login failed');
-            return false;
+            return { success: false };
         }
     };
 
@@ -48,10 +48,10 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', res.data.token);
             setUser(res.data);
             toast.success('Registration successful!');
-            return true;
+            return { success: true, role: res.data.role };
         } catch (error) {
             toast.error(error.response?.data?.message || 'Registration failed');
-            return false;
+            return { success: false };
         }
     };
 

@@ -1,10 +1,10 @@
 import express from 'express';
-import { protect, personalOnly } from '../middleware/authMiddleware.js';
+import { protect } from '../middleware/authMiddleware.js';
 import { getIncomes, addIncome, deleteIncome, updateIncome } from '../controllers/incomeController.js';
 
 const router = express.Router();
 
-router.route('/').get(protect, personalOnly, getIncomes).post(protect, personalOnly, addIncome);
-router.route('/:id').delete(protect, personalOnly, deleteIncome).put(protect, personalOnly, updateIncome);
+router.route('/').get(protect, getIncomes).post(protect, addIncome);
+router.route('/:id').delete(protect, deleteIncome).put(protect, updateIncome);
 
 export default router;
