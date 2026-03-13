@@ -97,7 +97,7 @@ const CompanyReports = () => {
                     <h3 className="text-lg font-semibold mb-4 text-gray-800">Project Budget vs Spend</h3>
                     {projectData.length > 0 ? (
                         <div className="flex-1 w-full min-h-0">
-                            <ResponsiveContainer width="100%" height="100%">
+                            <ResponsiveContainer width="99%" height={300}>
                                 <BarChart data={projectData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                                     <XAxis dataKey="name" axisLine={false} tickLine={false} />
@@ -119,7 +119,7 @@ const CompanyReports = () => {
                     <h3 className="text-lg font-semibold mb-4 text-gray-800">Expense Request Status</h3>
                     {expenseStatusData.length > 0 ? (
                         <div className="flex-1 w-full min-h-0">
-                            <ResponsiveContainer width="100%" height="100%">
+                            <ResponsiveContainer width="99%" height={300}>
                                 <PieChart>
                                     <Pie
                                         data={expenseStatusData}

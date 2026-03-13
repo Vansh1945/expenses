@@ -112,7 +112,7 @@ const GroupAnalytics = () => {
                         <div className="bg-white p-6 rounded-xl shadow border border-gray-100 h-96 flex flex-col">
                             <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">Spending by Category</h3>
                             <div className="flex-1 w-full min-h-0">
-                                <ResponsiveContainer width="100%" height="100%" minHeight={300} minWidth={300}>
+                                <ResponsiveContainer width="99%" height={300}>
                                     <PieChart>
                                         <Pie
                                             data={categoryData}
@@ -139,7 +139,7 @@ const GroupAnalytics = () => {
                         <div className="bg-white p-6 rounded-xl shadow border border-gray-100 h-96 flex flex-col">
                             <h3 className="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">Who Paid How Much</h3>
                             <div className="flex-1 w-full min-h-0">
-                                <ResponsiveContainer width="100%" height="100%" minHeight={300} minWidth={300}>
+                                <ResponsiveContainer width="99%" height={300}>
                                     <BarChart
                                         data={paidByData}
                                         margin={{ top: 20, right: 30, left: 20, bottom: 5 }}

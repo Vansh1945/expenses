@@ -118,7 +118,7 @@ const Dashboard = () => {
                     <h3 className="text-lg font-semibold mb-4">Category Wise Spend (Current Month)</h3>
                     {categoryData.length > 0 ? (
                         <div className="flex-1 min-h-0 w-full">
-                            <ResponsiveContainer width="100%" height="100%">
+                            <ResponsiveContainer width="99%" height={300}>
                                 <PieChart>
                                     <Pie
                                         data={categoryData}

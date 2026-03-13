@@ -13,6 +13,9 @@ import {
     deleteCategory,
     getReports
 } from '../controllers/adminController.js';
+import {
+    getAdminAnalytics
+} from '../controllers/adminAnalyticController.js';
 
 const router = express.Router();
 
@@ -23,31 +26,20 @@ router.use(protect, admin);
 router.get('/dashboard', getAdminDashboardStats);
 
 // Users
-router.route('/users')
-    .get(getUsers);
-router.route('/users/:id')
-    .put(updateUser)
-    .delete(deleteUser);
-router.route('/users/:id/expenses')
-    .get(getUserExpenses);
-router.route('/users/:userId/expenses/:expenseId')
-    .delete(deleteUserExpense);
-
-import {
-    getAdminAnalytics
-} from '../controllers/adminMasterController.js';
+router.get('/users',getUsers);
+router.put('/users/:id', updateUser);
+router.put('/users/:id', deleteUser);
+router.get('/users/:id/expenses' ,getUserExpenses);
+router.delete('/users/:userId/expenses/:expenseId',deleteUserExpense);
 
 // Categories
-router.route('/categories')
-    .get(getCategories)
-    .post(createCategory);
-router.route('/categories/:id')
-    .put(updateCategory)
-    .delete(deleteCategory);
+router.get('/categories', getCategories);
+router.post('/categories', createCategory);
+router.put('/categories/:id',updateCategory);
+router.delete('/categories/:id',deleteCategory);
 
 // Reports
 router.get('/reports', getReports);
-
 
 // Advanced Analytics
 router.get('/analytics/overview', getAdminAnalytics);

@@ -4,22 +4,18 @@ import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.route('/')
-    .post(protect, createGroup)
-    .get(protect, getGroups);
-
+router.post('/', protect, createGroup)
+router.get('/', protect, getGroups)
 router.post('/join', protect, joinGroupByCode);
 
-router.route('/:id')
-    .get(protect, getGroupById)
-    .put(protect, updateGroup)
-    .delete(protect, deleteGroup);
+router.get('/:id', protect, getGroupById)
+router.put('/:id', protect, updateGroup)
+router.delete('/:id', protect, deleteGroup)
 
-router.route('/:id/members')
-    .put(protect, addMemberToGroup);
 
-router.route('/:id/members/:memberId')
-    .put(protect, updateMemberInGroup)
-    .delete(protect, removeMemberFromGroup);
+router.put('/:id/members', protect, addMemberToGroup);
+
+router.put('/:id/members/:memberId', protect, updateMemberInGroup)
+router.delete('/:id/members/:memberId', protect, removeMemberFromGroup);
 
 export default router;

@@ -58,6 +58,11 @@ export const AuthProvider = ({ children }) => {
             } catch (error) {
                 setUser(null);
                 localStorage.removeItem('token');
+                localStorage.removeItem('appMode');
+                localStorage.removeItem('selectedGroupId');
+                setAppModeState('personal');
+                setSelectedGroupIdState(null);
+                setActiveGroup(null);
             } finally {
                 setLoading(false);
             }
@@ -94,6 +99,11 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('appMode');
+        localStorage.removeItem('selectedGroupId');
+        setAppModeState('personal');
+        setSelectedGroupIdState(null);
+        setActiveGroup(null);
         setUser(null);
         toast.info('Logged out');
     };

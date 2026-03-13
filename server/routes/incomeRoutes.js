@@ -4,7 +4,9 @@ import { getIncomes, addIncome, deleteIncome, updateIncome } from '../controller
 
 const router = express.Router();
 
-router.route('/').get(protect, getIncomes).post(protect, addIncome);
-router.route('/:id').delete(protect, deleteIncome).put(protect, updateIncome);
+router.get('/',protect, getIncomes)
+router.post('/',protect, addIncome)
+router.delete('/:id',protect, deleteIncome)
+router.put('/:id',protect, updateIncome)
 
 export default router;

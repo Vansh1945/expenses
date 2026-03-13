@@ -5,9 +5,9 @@ import { protect, businessOnly } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 // Business-Only Routes
-router.route('/').post(protect, businessOnly, createProject)
-    .get(protect, businessOnly, getProjects);
+router.post('/', protect, businessOnly, createProject)
+router.get('/', protect, businessOnly, getProjects)
 
-router.route('/:id').put(protect, businessOnly, updateProject);
+router.put('/:id', protect, businessOnly, updateProject);
 
 export default router;

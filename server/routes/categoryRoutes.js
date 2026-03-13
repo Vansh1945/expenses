@@ -5,6 +5,6 @@ import { getCategories } from '../controllers/adminController.js';
 const router = express.Router();
 
 // Allow all authenticated users to GET predefined categories
-router.route('/').get(protect, getCategories);
+router.put('/', protect, getCategories);
 
 export default router;

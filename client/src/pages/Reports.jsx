@@ -158,7 +158,7 @@ const Reports = () => {
                 <div className="bg-white rounded-xl shadow p-6">
                     <h3 className="text-lg font-semibold text-gray-700 mb-4">Category-wise Breakdown</h3>
                     {categoryData.length > 0 ? (
-                        <ResponsiveContainer width="100%" height={280}>
+                        <ResponsiveContainer width="99%" height={280}>
                             <PieChart>
                                 <Pie
                                     data={categoryData}
@@ -188,7 +188,7 @@ const Reports = () => {
                 <div className="bg-white rounded-xl shadow p-6">
                     <h3 className="text-lg font-semibold text-gray-700 mb-4">Monthly Spending Trend ({selectedYear})</h3>
                     {yearlyData?.monthlyBreakdown?.length > 0 ? (
-                        <ResponsiveContainer width="100%" height={280}>
+                        <ResponsiveContainer width="99%" height={280}>
                             <LineChart data={yearlyData.monthlyBreakdown}>
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis dataKey="month" tickFormatter={val => MONTHS[val - 1] || val} />
